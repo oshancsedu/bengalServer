@@ -30,20 +30,7 @@ class WelcomeController extends Controller {
 	 */
 	public function index()
 	{
-        return view('login');
+        $login=0;
+        return view('login')->with('login',$login);
 	}
-
-    public function login()
-    {
-        //session_start();
-        if(!isset($_SESSION['userID']))
-            return view('login');
-        $userID=$_SESSION['userID'];
-        if($userID=="")
-            return view('login');
-        else
-            return view('home');
-        //return "Oshan";
-    }
-
 }

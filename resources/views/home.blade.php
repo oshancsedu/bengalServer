@@ -1,45 +1,38 @@
-<?php
-session_start();
-$userID = $_SESSION['userID'];
-?>
 <html>
 <head>
     <title>Home</title>
-    <link rel="shortcut icon" type="image/x-icon" href="icon.ico"/>
-    <?php include('config/meta.php'); ?>
-    <!--[if lte IE 8]-->
-    <?php include('config/js.php'); ?>
-    <noscript>
-        <?php include('config/css.php'); ?>
-    </noscript>
-    <?php
-    include_once 'config/commonutilities.php';?>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    @include('config/commonutilities')
+    @include(DIR_TEMPLATE.'/basicsetup')
 </head>
 
 <body>
-<?php include DIR_TEMPLATE . '\header.php'?>
-
+@include(DIR_TEMPLATE.'/header')
 <section id="main" class="wrapper">
     <div class="container">
         <header class="major special">
-            <h2>User: <?php echo $userID; ?></h2>
-
+            <h2>User: {{Auth::user()->user_id}}</h2>
             <p>Product Order Information</p>
         </header>
 
         <form method="post" action="home">
             <div class="row uniform 50%">
-
-                <?php include DIR_TEMPLATE . '\EmployeeListDrop.php' ?>
-                <?php include DIR_TEMPLATE . '\DistributorListDrop.php' ?>
-                <?php include DIR_TEMPLATE . '\ProductListDrop.php' ?>
+                @include(DIR_TEMPLATE.'/EmployeeListDrop')
+                @include(DIR_TEMPLATE.'/AreaCodeListDrop')
+                @include(DIR_TEMPLATE.'/ProductListDrop')
                 <br>
             </div>
             <div class="row uniform 50%">
-                <?php include DIR_TEMPLATE . '\timeSelectionFrom.php' ?>
+                @include(DIR_TEMPLATE.'/timeSelectionFrom')
             </div>
             <div class="row uniform 50%" id="dateRangePanel">
-                <?php include DIR_TEMPLATE . '\timeSelectionTo.php' ?>
+                @include(DIR_TEMPLATE.'/timeSelectionTo')
+            </div>
+            <div class="row uniform 50%" id="dateType">
+                <div class="6u 12u$(small)">
+                    <input type="checkbox" id="copy" name="copy">
+                    <label for="copy">Supply Date</label>
+                </div>
             </div>
             <div class="row uniform 50%">
                 <div class="12u$">
@@ -48,9 +41,10 @@ $userID = $_SESSION['userID'];
                     </ul>
                 </div>
             </div>
+            <input type="hidden" name="_token" id="csrf_token" value="<?php echo csrf_token();?>">
         </form>
 
-        <?php include DIR_TEMPLATE . '\orderinfo.php' ?>
+        @include(DIR_TEMPLATE . '/orderinfo')
 
     </div>
 </section>
